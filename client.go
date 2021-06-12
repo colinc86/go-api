@@ -9,8 +9,8 @@ import (
 // An application programming interface.
 type API struct {
 
-	// The client's HTTP client.
-	client *http.Client
+	// The Client's HTTP Client.
+	Client *http.Client
 }
 
 // Creates a new API.
@@ -21,7 +21,7 @@ func NewAPI() *API {
 // Creates a new API from the given HTTP client.
 func NewAPIFromHTTPClient(client *http.Client) *API {
 	return &API{
-		client: client,
+		Client: client,
 	}
 }
 
@@ -34,7 +34,7 @@ func (a API) PerformRequest(r Request) (*http.Response, error) {
 	}
 
 	// Get the response
-	return a.client.Do(request)
+	return a.Client.Do(request)
 }
 
 // PerformUnmarshalRequest performs the API request and unmarshals the response

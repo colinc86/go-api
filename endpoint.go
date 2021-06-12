@@ -21,4 +21,7 @@ type Endpoint interface {
 
 	// The endpoint's query parameters.
 	Values() *url.Values
+
+	// Returns an API request with the given HTTP method.
+	Request(method string) *Request
 }

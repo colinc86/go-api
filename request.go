@@ -16,6 +16,14 @@ type Request struct {
 	Endpoint Endpoint
 }
 
+// NewRequest creates a new API request from the given HTTP method and endpoint.
+func NewRequest(method string, endpoint Endpoint) *Request {
+	return &Request{
+		Method:   method,
+		Endpoint: endpoint,
+	}
+}
+
 // HTTPRequest creates and returns an HTTP request from the receiver.
 func (r Request) HTTPRequest() (*http.Request, error) {
 	u := &url.URL{
