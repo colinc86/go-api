@@ -23,5 +23,5 @@ type Endpoint interface {
 	Values() *url.Values
 
 	// Returns an API request with the given HTTP method.
-	Request(method string) *Request
+	Request(method string) Request
 }
