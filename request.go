@@ -17,8 +17,8 @@ type Request struct {
 }
 
 // NewRequest creates a new API request from the given HTTP method and endpoint.
-func NewRequest(method string, endpoint Endpoint) *Request {
-	return &Request{
+func NewRequest(method string, endpoint Endpoint) Request {
+	return Request{
 		Method:   method,
 		Endpoint: endpoint,
 	}
