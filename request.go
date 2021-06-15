@@ -24,7 +24,8 @@ func NewRequest(method string, endpoint Endpoint) Request {
 	}
 }
 
-// HTTPRequest creates and returns an HTTP request from the receiver.
+// HTTPRequest creates and returns an HTTP request from the receiver with the
+// given request parameters.
 func (r Request) HTTPRequest(p RequestParameters) (*http.Request, error) {
 	u := &url.URL{
 		Scheme: r.Endpoint.Scheme(),
@@ -32,12 +33,8 @@ func (r Request) HTTPRequest(p RequestParameters) (*http.Request, error) {
 		Path:   fmt.Sprintf("v%d/%s", r.Endpoint.Version(), r.Endpoint.Path()),
 	}
 
-	if v := r.Endpoint.Values(); v != nil {
-		for key, value := range p.URLQueryParameters() {
-			v.Add(key, value)
-		}
-
-		u.RawQuery = v.Encode()
+	if p != nil {
+		u.RawQuery = p.URLValues().Encode()
 	}
 
 	return http.NewRequest(r.Method, u.String(), nil)

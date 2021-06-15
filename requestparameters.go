@@ -1,5 +1,7 @@
 package goapi
 
+import "net/url"
+
 type RequestParameters interface {
-	URLQueryParameters() map[string]string
+	URLValues() *url.Values
 }
