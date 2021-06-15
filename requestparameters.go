@@ -3,5 +3,5 @@ package goapi
 import "net/url"
 
 type RequestParameters interface {
-	URLValues() *url.Values
+	URLValues(av map[string]string) *url.Values
 }

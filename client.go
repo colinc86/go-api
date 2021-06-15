@@ -27,9 +27,9 @@ func NewAPIFromHTTPClient(client *http.Client) *API {
 
 // PerformRequest performs the API request with the given query parameters and
 // returns an HTTP response.
-func (a API) PerformRequest(r Request, p RequestParameters) (*http.Response, error) {
+func (a API) PerformRequest(r Request, p RequestParameters, av map[string]string) (*http.Response, error) {
 	// Create the HTTP request
-	request, err := r.HTTPRequest(p)
+	request, err := r.HTTPRequest(p, av)
 	if err != nil {
 		return nil, err
 	}
@@ -40,8 +40,8 @@ func (a API) PerformRequest(r Request, p RequestParameters) (*http.Response, err
 
 // PerformUnmarshalRequest performs the API request with the given query
 // parameters and unmarshals the response data in to v.
-func (a API) PerformUnmarshalRequest(r Request, p RequestParameters, v interface{}) (*http.Response, error) {
-	response, err := a.PerformRequest(r, p)
+func (a API) PerformUnmarshalRequest(r Request, p RequestParameters, av map[string]string, v interface{}) (*http.Response, error) {
+	response, err := a.PerformRequest(r, p, av)
 
 	// Unmarshal objects
 	if response.Body != nil && v != nil {
