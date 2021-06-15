@@ -1,6 +1,10 @@
 package goapi
 
-// Endpoint types contain the information necessary to form a URL.
+// Endpoint types contain the information necessary to form an endpoint's URL.
+//
+// Requests use an endpoint to form a URL of the form
+//
+// [SCHEME]://[HOST]/v[VERSION]/[PATH]
 type Endpoint interface {
 
 	// The endpoint's scheme.

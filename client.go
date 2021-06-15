@@ -1,3 +1,5 @@
+// Package goapi provides types to facilitate the creation of RESTful API
+// wrappers.
 package goapi
 
 import (
@@ -7,27 +9,31 @@ import (
 )
 
 // An application programming interface.
-type API struct {
+type APIClient struct {
 
 	// The Client's HTTP Client.
 	Client *http.Client
 }
 
-// Creates a new API.
-func NewAPI() *API {
-	return NewAPIFromHTTPClient(&http.Client{})
+// NewAPIClient creates a new API.
+func NewAPIClient() *APIClient {
+	return NewAPIClientFromHTTPClient(&http.Client{})
 }
 
-// Creates a new API from the given HTTP client.
-func NewAPIFromHTTPClient(client *http.Client) *API {
-	return &API{
+// NewAPIClientFromHTTPClient creates a new API from the given HTTP client.
+func NewAPIClientFromHTTPClient(client *http.Client) *APIClient {
+	return &APIClient{
 		Client: client,
 	}
 }
 
 // PerformRequest performs the API request with the given query parameters and
 // returns an HTTP response.
-func (a API) PerformRequest(r Request, p RequestParameters, av map[string]string) (*http.Response, error) {
+func (a APIClient) PerformRequest(
+	r Request,
+	p RequestParameters,
+	av map[string]string,
+) (*http.Response, error) {
 	// Create the HTTP request
 	request, err := r.HTTPRequest(p, av)
 	if err != nil {
@@ -40,7 +46,12 @@ func (a API) PerformRequest(r Request, p RequestParameters, av map[string]string
 
 // PerformUnmarshalRequest performs the API request with the given query
 // parameters and unmarshals the response data in to v.
-func (a API) PerformUnmarshalRequest(r Request, p RequestParameters, av map[string]string, v interface{}) (*http.Response, error) {
+func (a APIClient) PerformUnmarshalRequest(
+	r Request,
+	p RequestParameters,
+	av map[string]string,
+	v interface{},
+) (*http.Response, error) {
 	response, err := a.PerformRequest(r, p, av)
 
 	// Unmarshal objects

@@ -25,8 +25,11 @@ func NewRequest(method string, endpoint Endpoint) Request {
 }
 
 // HTTPRequest creates and returns an HTTP request from the receiver with the
-// given request parameters.
-func (r Request) HTTPRequest(p RequestParameters, av map[string]string) (*http.Request, error) {
+// given request parameters and additional request parameter.
+func (r Request) HTTPRequest(
+	p RequestParameters,
+	av map[string]string,
+) (*http.Request, error) {
 	u := &url.URL{
 		Scheme: r.Endpoint.Scheme(),
 		Host:   r.Endpoint.Host(),
