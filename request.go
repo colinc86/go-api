@@ -25,7 +25,7 @@ func NewRequest(method string, endpoint Endpoint) Request {
 }
 
 // HTTPRequest creates and returns an HTTP request from the receiver.
-func (r Request) HTTPRequest(q map[string]string) (*http.Request, error) {
+func (r Request) HTTPRequest(p RequestParameters) (*http.Request, error) {
 	u := &url.URL{
 		Scheme: r.Endpoint.Scheme(),
 		Host:   r.Endpoint.Host(),
@@ -33,7 +33,7 @@ func (r Request) HTTPRequest(q map[string]string) (*http.Request, error) {
 	}
 
 	if v := r.Endpoint.Values(); v != nil {
-		for key, value := range q {
+		for key, value := range p.URLQueryParameters() {
 			v.Add(key, value)
 		}
 
