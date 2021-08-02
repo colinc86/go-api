@@ -35,7 +35,16 @@ func (r URLRequest) HTTPRequest(
 	}
 
 	if p != nil {
-		u.RawQuery = p.URLValues(av).Encode()
+		currentValues := u.Query()
+		newValues := p.URLValues(av)
+
+		for key, values := range currentValues {
+			for _, value := range values {
+				newValues.Add(key, value)
+			}
+		}
+
+		u.RawQuery = newValues.Encode()
 	}
 
 	return http.NewRequest(r.Method, u.String(), nil)
