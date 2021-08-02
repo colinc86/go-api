@@ -2,6 +2,7 @@ package goapi
 
 import (
 	"net/http"
+	"net/url"
 )
 
 // An API request.
@@ -28,5 +29,14 @@ func (r URLRequest) HTTPRequest(
 	p RequestParameters,
 	av map[string]string,
 ) (*http.Request, error) {
-	return http.NewRequest(r.Method, r.URL, nil)
+	u, err := url.Parse(r.URL)
+	if err != nil {
+		return nil, err
+	}
+
+	if p != nil {
+		u.RawQuery = p.URLValues(av).Encode()
+	}
+
+	return http.NewRequest(r.Method, u.String(), nil)
 }
