@@ -37,9 +37,9 @@ func (r EndpointRequest) HTTPRequest(
 		Path:   fmt.Sprintf("v%d/%s", r.Endpoint.Version(), r.Endpoint.Path()),
 	}
 
-	var newValues *url.Values
+	var newValues url.Values
 	if p == nil {
-		newValues = new(url.Values)
+		newValues = make(url.Values)
 	} else {
 		newValues = p.URLValues(av)
 	}

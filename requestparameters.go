@@ -8,5 +8,5 @@ type RequestParameters interface {
 
 	// URLValues returns the request parameter's fields as a URL values type. Use
 	// the av parameter to specify additional parameter values.
-	URLValues(av map[string]string) *url.Values
+	URLValues(av map[string]string) url.Values
 }

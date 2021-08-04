@@ -34,9 +34,9 @@ func (r URLRequest) HTTPRequest(
 		return nil, err
 	}
 
-	var newValues *url.Values
+	var newValues url.Values
 	if p == nil {
-		newValues = new(url.Values)
+		newValues = make(url.Values)
 	} else {
 		newValues = p.URLValues(av)
 	}
