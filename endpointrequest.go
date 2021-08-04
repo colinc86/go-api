@@ -37,9 +37,24 @@ func (r EndpointRequest) HTTPRequest(
 		Path:   fmt.Sprintf("v%d/%s", r.Endpoint.Version(), r.Endpoint.Path()),
 	}
 
-	if p != nil {
-		u.RawQuery = p.URLValues(av).Encode()
+	var newValues *url.Values
+	if p == nil {
+		newValues = new(url.Values)
+	} else {
+		newValues = p.URLValues(av)
 	}
 
+	for key, value := range av {
+		newValues.Add(key, value)
+	}
+
+	currentValues := u.Query()
+	for key, values := range currentValues {
+		for _, value := range values {
+			newValues.Add(key, value)
+		}
+	}
+
+	u.RawQuery = newValues.Encode()
 	return http.NewRequest(r.Method, u.String(), nil)
 }
