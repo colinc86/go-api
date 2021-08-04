@@ -1,7 +1,6 @@
 package goapi
 
 import (
-	"fmt"
 	"net/http"
 	"net/url"
 )
@@ -35,19 +34,24 @@ func (r URLRequest) HTTPRequest(
 		return nil, err
 	}
 
-	if p != nil {
-		currentValues := u.Query()
-		newValues := p.URLValues(av)
-
-		for key, values := range currentValues {
-			for _, value := range values {
-				newValues.Add(key, value)
-			}
-		}
-
-		u.RawQuery = newValues.Encode()
+	var newValues *url.Values
+	if p == nil {
+		newValues = new(url.Values)
+	} else {
+		newValues = p.URLValues(av)
 	}
 
-	fmt.Printf("url: %s, new url: %s\n", r.URL, u.String())
+	for key, value := range av {
+		newValues.Add(key, value)
+	}
+
+	currentValues := u.Query()
+	for key, values := range currentValues {
+		for _, value := range values {
+			newValues.Add(key, value)
+		}
+	}
+
+	u.RawQuery = newValues.Encode()
 	return http.NewRequest(r.Method, u.String(), nil)
 }
