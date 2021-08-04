@@ -1,6 +1,7 @@
 package goapi
 
 import (
+	"fmt"
 	"net/http"
 	"net/url"
 )
@@ -47,5 +48,6 @@ func (r URLRequest) HTTPRequest(
 		u.RawQuery = newValues.Encode()
 	}
 
+	fmt.Printf("url: %s, new url: %s\n", r.URL, u.String())
 	return http.NewRequest(r.Method, u.String(), nil)
 }
