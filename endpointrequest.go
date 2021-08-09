@@ -40,12 +40,12 @@ func (r EndpointRequest) HTTPRequest(
 	var newValues url.Values
 	if p == nil {
 		newValues = make(url.Values)
+
+		for key, value := range av {
+			newValues.Add(key, value)
+		}
 	} else {
 		newValues = p.URLValues(av)
-	}
-
-	for key, value := range av {
-		newValues.Add(key, value)
 	}
 
 	currentValues := u.Query()
